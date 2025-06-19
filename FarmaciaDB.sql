@@ -73,6 +73,34 @@ CREATE TABLE DetalleVenta (
     FOREIGN KEY (id_medicamento) REFERENCES Medicamento(id_medicamento)
 );
 
+-- Tabla: Proveedor
+CREATE TABLE Proveedor (
+    id_proveedor INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    telefono VARCHAR(20),
+    direccion VARCHAR(100)
+);
+
+-- Tabla: Compra
+CREATE TABLE Compra (
+    id_compra INT AUTO_INCREMENT PRIMARY KEY,
+    id_proveedor INT,
+    fecha DATE,
+    total DECIMAL(10,2),
+    FOREIGN KEY (id_proveedor) REFERENCES Proveedor(id_proveedor)
+);
+
+-- Tabla: DetalleCompra
+CREATE TABLE DetalleCompra (
+    id_compra INT,
+    id_medicamento INT,
+    cantidad INT,
+    precio_unitario DECIMAL(8,2),
+    PRIMARY KEY (id_compra, id_medicamento),
+    FOREIGN KEY (id_compra) REFERENCES Compra(id_compra),
+    FOREIGN KEY (id_medicamento) REFERENCES Medicamento(id_medicamento)
+);
+
 
  -- EBTREGA 2
  -- VISTAS
@@ -214,4 +242,3 @@ BEGIN
 END //
 
 DELIMITER ;
-

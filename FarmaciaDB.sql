@@ -101,6 +101,14 @@ CREATE TABLE DetalleCompra (
     FOREIGN KEY (id_medicamento) REFERENCES Medicamento(id_medicamento)
 );
 
+CREATE TABLE AlertaStock (
+    id_alerta INT AUTO_INCREMENT PRIMARY KEY,
+    id_medicamento INT,
+    mensaje VARCHAR(255),
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_medicamento) REFERENCES Medicamento(id_medicamento)
+);
+
 
  -- EBTREGA 2
  -- VISTAS
@@ -134,6 +142,27 @@ SELECT
 FROM Paciente p
 LEFT JOIN Receta r ON p.id_paciente = r.id_paciente
 GROUP BY p.id_paciente, p.nombre, p.apellido;
+
+-- Como cuarta vista mostramos los medicamentos mas vendidos (esto sirve para ver la rotacion en las ventas)
+CREATE VIEW vista_medicamentos_mas_vendidos AS
+SELECT 
+    m.id_medicamento,
+    m.nombre,
+    SUM(dv.cantidad) AS total_vendido
+FROM DetalleVenta dv
+JOIN Medicamento m ON dv.id_medicamento = m.id_medicamento
+GROUP BY m.id_medicamento, m.nombre
+ORDER BY total_vendido DESC;
+
+-- La quinta muestra las ventas diarias (nos va a permitir ver evolucion de las ventas y poder comparar dias si queremos hacerlo en un futuro)
+CREATE VIEW vista_ventas_diarias AS
+SELECT 
+    DATE(fecha) AS dia,
+    COUNT(*) AS cantidad_ventas,
+    SUM(total) AS total_diario
+FROM Venta
+GROUP BY DATE(fecha)
+ORDER BY dia;
 
  --FUNCIONES
  -- La primer funcion para calcular el valor de las ventas
@@ -239,6 +268,22 @@ BEGIN
     UPDATE Medicamento
     SET stock = stock - NEW.cantidad
     WHERE id_medicamento = NEW.id_medicamento;
+END //
+
+DELIMITER ;
+
+--Trigger 2, vinculado a la tabla AlertaStock que almacena los avisos. Este trigger nos sirve para llevar un stock minimo de 5 productos
+
+DELIMITER //
+
+CREATE TRIGGER tr_control_stock_minimo
+AFTER UPDATE ON Medicamento
+FOR EACH ROW
+BEGIN
+    IF NEW.stock < 5 THEN
+        INSERT INTO AlertaStock (id_medicamento, mensaje)
+        VALUES (NEW.id_medicamento, CONCAT('Stock crítico: ', NEW.stock, ' unidades restantes.'));
+    END IF;
 END //
 
 DELIMITER ;

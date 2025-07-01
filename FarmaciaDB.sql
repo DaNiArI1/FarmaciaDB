@@ -1,5 +1,6 @@
--- Empiezo por crear la base de datos (por ahora es para una farmacia, pero no estoy seguro de si sera el final). Comparto tambien que estuve 128 años resolviendo un problema con la conexion
+-- Empiezo por crear la base de datos. Comparto tambien que estuve 128 años resolviendo un problema con la conexion
 -- al final era una configuracion en el panel de control, en "region", que como es considerada BETA viene deshabilitada a veces. Ademas reinicie el servicio MYSQL80, aunque eso solo no solucionaba
+--NOTA: Entiendo que en un contexto realista no es bueno el exceso de comentarios, pero los introduzco aca para que sea mas explicativo de el proceso de creacion y algun comentario que pueda sumar.
 CREATE DATABASE IF NOT EXISTS FarmaciaDB;
 USE FarmaciaDB;
 
@@ -109,8 +110,88 @@ CREATE TABLE AlertaStock (
     FOREIGN KEY (id_medicamento) REFERENCES Medicamento(id_medicamento)
 );
 
+-- Decidi ampliar el proyecto para la entrega final, asi que agregue las siguientes 9 tablas.
+--Tabla: ObraSocial
+CREATE TABLE ObraSocial (
+    id_obra_social INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    telefono VARCHAR(20),
+    email VARCHAR(100)
+);
 
- -- EBTREGA 2
+-- Tabla: PacienteObraSocial
+CREATE TABLE PacienteObraSocial (
+    id_paciente INT,
+    id_obra_social INT,
+    numero_afiliado VARCHAR(50),
+    PRIMARY KEY (id_paciente, id_obra_social),
+    FOREIGN KEY (id_paciente) REFERENCES Paciente(id_paciente),
+    FOREIGN KEY (id_obra_social) REFERENCES ObraSocial(id_obra_social)
+);
+
+-- Tabla: Turno
+CREATE TABLE Turno (
+    id_turno INT AUTO_INCREMENT PRIMARY KEY,
+    id_paciente INT,
+    fecha DATETIME,
+    motivo VARCHAR(100),
+    FOREIGN KEY (id_paciente) REFERENCES Paciente(id_paciente)
+);
+
+-- Tabla: HistorialPrecio
+CREATE TABLE HistorialPrecio (
+    id_historial INT AUTO_INCREMENT PRIMARY KEY,
+    id_medicamento INT,
+    precio_anterior DECIMAL(8,2),
+    precio_nuevo DECIMAL(8,2),
+    fecha_cambio DATE,
+    FOREIGN KEY (id_medicamento) REFERENCES Medicamento(id_medicamento)
+);
+
+-- Tabla: MovimientoStock
+CREATE TABLE MovimientoStock (
+    id_movimiento INT AUTO_INCREMENT PRIMARY KEY,
+    id_medicamento INT,
+    tipo VARCHAR(20),
+    cantidad INT,
+    fecha DATETIME,
+    FOREIGN KEY (id_medicamento) REFERENCES Medicamento(id_medicamento)
+);
+
+-- Tabla: UsuarioSistema
+CREATE TABLE UsuarioSistema (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_usuario VARCHAR(50),
+    rol VARCHAR(30),
+    email VARCHAR(100),
+    contrasena VARCHAR(255)
+);
+
+-- Tabla: BitacoraCambios
+CREATE TABLE BitacoraCambios (
+    id_cambio INT AUTO_INCREMENT PRIMARY KEY,
+    tabla_afectada VARCHAR(50),
+    id_usuario INT,
+    accion VARCHAR(50),
+    fecha DATETIME,
+    FOREIGN KEY (id_usuario) REFERENCES UsuarioSistema(id_usuario)
+);
+
+-- Tabla: CategoriaMedicamento
+CREATE TABLE CategoriaMedicamento (
+    id_categoria INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100)
+);
+
+-- Tabla: MedicamentoCategoria
+CREATE TABLE MedicamentoCategoria (
+    id_medicamento INT,
+    id_categoria INT,
+    PRIMARY KEY (id_medicamento, id_categoria),
+    FOREIGN KEY (id_medicamento) REFERENCES Medicamento(id_medicamento),
+    FOREIGN KEY (id_categoria) REFERENCES CategoriaMedicamento(id_categoria)
+);
+
  -- VISTAS
  -- La primera muestra ventas por cada laburante
 CREATE VIEW vista_ventas_por_empleado AS

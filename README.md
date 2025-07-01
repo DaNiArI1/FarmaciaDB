@@ -1,5 +1,7 @@
 # FarmaciaDB por Daniel Ariguel
 
-La explicacion de las tablas va en un archivo aparte porque es el que voy a ir modificando conforme avanza el proyecto
+Entrega final del proyecto de DB para farmacia.
 
-ACTUALIZACION: Lista la parte 2, sigue en FarmaciaDB.sql despues de todo lo de la parte 1
+Contiene 2 archivos .sql, uno con la creación de la DB en general (entiendase como creación de tablas, vistas, triggers, stored procedures, etc) y otro archivo con la inserción de datos en las correspondientes tablas. Contiene también 2 archivos .pdf, uno con la descripción y detalles de cada una de las tablas, y otro con el informe y documentación del proyecto.
+
+Muchas gracias por leer y por su tiempo, saludos.

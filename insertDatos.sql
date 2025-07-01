@@ -132,4 +132,121 @@ INSERT INTO DetalleCompra (id_compra, id_medicamento, cantidad, precio_unitario)
 (9, 9, 12, 850.00),
 (10, 10, 18, 300.00);
 
+-- ObraSocial
+INSERT INTO ObraSocial (nombre, telefono, email) VALUES
+('PAMI', '0800-333-0001', 'pami@obrasocial.com'),
+('OSDE', '0800-333-0002', 'osde@obrasocial.com'),
+('IOMA', '0800-333-0003', 'ioma@obrasocial.com'),
+('Swiss Medical', '0800-333-0004', 'swiss@obrasocial.com'),
+('Galeno', '0800-333-0005', 'galeno@obrasocial.com'),
+('Sancor Salud', '0800-333-0006', 'sancor@obrasocial.com'),
+('Federada', '0800-333-0007', 'federada@obrasocial.com'),
+('Union Personal', '0800-333-0008', 'up@obrasocial.com'),
+('OSPIL', '0800-333-0009', 'ospil@obrasocial.com'),
+('AMFFA', '0800-333-0010', 'amffa@obrasocial.com');
+
+-- PacienteObraSocial
+INSERT INTO PacienteObraSocial (id_paciente, id_obra_social, numero_afiliado) VALUES
+(1, 9, 'AFIL00001'),
+(2, 8, 'AFIL00002'),
+(3, 10, 'AFIL00003'),
+(4, 1, 'AFIL00004'),
+(5, 9, 'AFIL00005'),
+(6, 4, 'AFIL00006'),
+(7, 6, 'AFIL00007'),
+(8, 7, 'AFIL00008'),
+(9, 6, 'AFIL00009'),
+(10, 2, 'AFIL00010');
+
+-- Turno
+INSERT INTO Turno (id_paciente, fecha, motivo) VALUES
+(3, '2025-07-03 09:00:00', 'Motivo 1'),
+(10, '2025-07-03 09:30:00', 'Motivo 2'),
+(5, '2025-07-03 10:00:00', 'Motivo 3'),
+(1, '2025-07-03 10:30:00', 'Motivo 4'),
+(2, '2025-07-03 11:00:00', 'Motivo 5'),
+(6, '2025-07-03 11:30:00', 'Motivo 6'),
+(9, '2025-07-03 12:00:00', 'Motivo 7'),
+(3, '2025-07-03 12:30:00', 'Motivo 8'),
+(1, '2025-07-03 13:00:00', 'Motivo 9'),
+(10, '2025-07-03 13:30:00', 'Motivo 10');
+
+-- HistorialPrecio
+INSERT INTO HistorialPrecio (id_medicamento, precio_anterior, precio_nuevo, fecha_cambio) VALUES
+(1, 924.82, 993.27, '2025-06-22'),
+(2, 1686.06, 1748.46, '2025-06-15'),
+(3, 1500.48, 1557.64, '2025-06-21'),
+(4, 516.09, 567.83, '2025-06-13'),
+(5, 1684.3, 1763.87, '2025-06-12'),
+(6, 573.7, 626.37, '2025-06-01'),
+(7, 1511.44, 1555.03, '2025-06-08'),
+(8, 982.37, 1065.26, '2025-06-28'),
+(9, 996.06, 1081.88, '2025-06-14'),
+(10, 1774.82, 1828.96, '2025-06-23');
+
+-- MovimientoStock
+INSERT INTO MovimientoStock (id_medicamento, tipo, cantidad, fecha) VALUES
+(6, 'entrada', 25, '2025-06-01 00:00:00'),
+(7, 'salida', 97, '2025-06-02 00:00:00'),
+(3, 'ajuste', 74, '2025-06-03 00:00:00'),
+(1, 'salida', 31, '2025-06-04 00:00:00'),
+(6, 'entrada', 37, '2025-06-05 00:00:00'),
+(9, 'entrada', 59, '2025-06-06 00:00:00'),
+(2, 'ajuste', 91, '2025-06-07 00:00:00'),
+(4, 'entrada', 63, '2025-06-08 00:00:00'),
+(10, 'ajuste', 2, '2025-06-09 00:00:00'),
+(1, 'entrada', 91, '2025-06-10 00:00:00');
+
+-- UsuarioSistema
+INSERT INTO UsuarioSistema (nombre_usuario, rol, email, contrasena) VALUES
+('user1', 'Rol1', 'user1@mail.com', 'pass1'),
+('user2', 'Rol2', 'user2@mail.com', 'pass2'),
+('user3', 'Rol3', 'user3@mail.com', 'pass3'),
+('user4', 'Rol4', 'user4@mail.com', 'pass4'),
+('user5', 'Rol5', 'user5@mail.com', 'pass5'),
+('user6', 'Rol6', 'user6@mail.com', 'pass6'),
+('user7', 'Rol7', 'user7@mail.com', 'pass7'),
+('user8', 'Rol8', 'user8@mail.com', 'pass8'),
+('user9', 'Rol9', 'user9@mail.com', 'pass9'),
+('user10', 'Rol10', 'user10@mail.com', 'pass10');
+
+-- BitacoraCambios
+INSERT INTO BitacoraCambios (tabla_afectada, id_usuario, accion, fecha) VALUES
+('Venta', 4, 'DELETE', '2025-06-02 00:00:00'),
+('Venta', 7, 'UPDATE', '2025-06-03 00:00:00'),
+('Medicamento', 4, 'UPDATE', '2025-06-04 00:00:00'),
+('Venta', 9, 'DELETE', '2025-06-05 00:00:00'),
+('Venta', 6, 'INSERT', '2025-06-06 00:00:00'),
+('Stock', 1, 'INSERT', '2025-06-07 00:00:00'),
+('Venta', 3, 'INSERT', '2025-06-08 00:00:00'),
+('Stock', 10, 'DELETE', '2025-06-09 00:00:00'),
+('Stock', 1, 'INSERT', '2025-06-10 00:00:00'),
+('Venta', 10, 'INSERT', '2025-06-11 00:00:00');
+
+-- CategoriaMedicamento
+INSERT INTO CategoriaMedicamento (nombre) VALUES
+('Antibióticos'),
+('Analgésicos'),
+('Antiinflamatorios'),
+('Antihistamínicos'),
+('Antisépticos'),
+('Broncodilatadores'),
+('Cardiovasculares'),
+('Diuréticos'),
+('Gastrointestinales'),
+('Psicotrópicos');
+
+-- MedicamentoCategoria
+INSERT INTO MedicamentoCategoria (id_medicamento, id_categoria) VALUES
+(10, 1),
+(7, 9),
+(4, 3),
+(6, 6),
+(1, 1),
+(6, 10),
+(6, 3),
+(10, 10),
+(3, 5),
+(9, 3);
+
 -- Con esto insertamos datos en todas las tablas
